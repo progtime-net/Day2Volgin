@@ -10,27 +10,22 @@ namespace CalcJun.Classes
 {
     public class Calculator : ICalculator
     {
+        private IOperation[] operations = new IOperation[4];
+        public Calculator()
+        {
+            operations[0] = new OperationPlus();
+            operations[1] = new OperationMinus();
+            operations[2] = new OperationUmn();
+            operations[3] = new OperationDel();
+        }
         public float ExecuteOperation(string operation, float a, float b)
         {
-            if (operation == "+")
+            foreach( var op in operations)
             {
-                OperationPlus operationPlus = new OperationPlus();
-                return operationPlus.Execute(a, b);
-            }
-            else if (operation == "-")
-            {
-                OperationMinus operationMinus = new OperationMinus();
-                return operationMinus.Execute(a, b);
-            }
-            else if (operation == "*")
-            {
-                OperationUmn operationUmn = new OperationUmn();
-                return operationUmn.Execute(a, b);
-            }
-            else if (operation == "/")
-            {
-                OperationDel operationDel = new OperationDel();
-                return operationDel.Execute(a, b);
+                if (operation == op.Name)
+                {
+                    return op.Execute(a, b);
+                }
             }
             return 0;
         }
